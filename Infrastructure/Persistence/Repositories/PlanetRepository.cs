@@ -1,5 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SwApi.Domain.Entities;
 using SwApi.Infrastructure.Persistence.Common;
 
@@ -10,8 +9,11 @@ public class PlanetRepository(DbContext dbContext) : Repository<Planet>(dbContex
     public async Task<Planet?> FindAsync(Guid id, CancellationToken cancellationToken = default) =>
         await base.FindAsync(id, cancellationToken: cancellationToken);
 
-    public async Task<List<Planet>> FindAllAsync(CancellationToken cancellationToken = default) =>
-        await base.FindAllAsync(cancellationToken: cancellationToken);
+    public async Task<List<Planet>> FindAllAsync(
+        int? pageNumber = default,
+        int? pageSize = default,
+        CancellationToken cancellationToken = default) =>
+        await base.FindAllAsync(pageNumber, pageSize, cancellationToken: cancellationToken);
 
     public async Task AddAsync(Planet planet, CancellationToken cancellationToken = default)
     {
@@ -27,9 +29,7 @@ public class PlanetRepository(DbContext dbContext) : Repository<Planet>(dbContex
 
     public async Task DeleteAsync(Planet planet, CancellationToken cancellationToken = default)
     {
-        Guard.Against.Null(planet.Id);
-
-        base.Remove(planet.Id.Value);
+        base.Remove(planet.Id);
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 }

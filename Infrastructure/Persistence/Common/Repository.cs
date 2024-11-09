@@ -32,6 +32,8 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity : BaseEntity
     }
 
     public async Task<List<TEntity>> FindAllAsync(
+        int? pageNumber = default,
+        int? pageSize = default,
         bool noTracking = default,
         Expression<Func<TEntity, bool>>? where = default,
         Expression<Func<TEntity, object?>>? orderBy = default,
@@ -55,6 +57,13 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity : BaseEntity
 
         if (noTracking)
             queryable = queryable.AsNoTracking();
+
+        if (pageSize is not null && pageNumber is not null)
+        {
+            queryable = queryable
+                .Skip((pageNumber.Value - 1) * pageSize.Value)
+                .Take(pageSize.Value);
+        }
 
         return await queryable.ToListAsync(cancellationToken);
     }

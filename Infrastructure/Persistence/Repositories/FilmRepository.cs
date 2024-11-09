@@ -1,5 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SwApi.Domain.Entities;
 using SwApi.Infrastructure.Persistence.Common;
 
@@ -10,8 +9,11 @@ public class FilmRepository(DbContext dbContext) : Repository<Film>(dbContext)
     public async Task<Film?> FindAsync(Guid id, CancellationToken cancellationToken = default) =>
         await base.FindAsync(id, cancellationToken: cancellationToken);
 
-    public async Task<List<Film>> FindAllAsync(CancellationToken cancellationToken = default) =>
-        await base.FindAllAsync(cancellationToken: cancellationToken);
+    public async Task<List<Film>> FindAllAsync(
+        int? pageNumber = default,
+        int? pageSize = default,
+        CancellationToken cancellationToken = default) =>
+        await base.FindAllAsync(pageNumber, pageSize, cancellationToken: cancellationToken);
 
     public async Task AddAsync(Film film, CancellationToken cancellationToken = default)
     {
@@ -27,9 +29,7 @@ public class FilmRepository(DbContext dbContext) : Repository<Film>(dbContext)
 
     public async Task DeleteAsync(Film film, CancellationToken cancellationToken = default)
     {
-        Guard.Against.Null(film.Id);
-
-        base.Remove(film.Id.Value);
+        base.Remove(film.Id);
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 }

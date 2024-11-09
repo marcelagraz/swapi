@@ -10,7 +10,7 @@ public class People : BaseEntity
 
     public string? Gender { get; set; }
 
-    public List<Film> Films { get; set; } = [];
+    public List<int> Films { get; set; } = [];
 
     public Guid? PlanetId { get; set; }
 

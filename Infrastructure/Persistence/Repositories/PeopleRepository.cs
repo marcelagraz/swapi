@@ -1,17 +1,20 @@
-﻿using Ardalis.GuardClauses;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SwApi.Application.Common.Repositories;
 using SwApi.Domain.Entities;
 using SwApi.Infrastructure.Persistence.Common;
 
 namespace SwApi.Infrastructure.Persistence.Repositories;
 
-public class PeopleRepository(DbContext dbContext) : Repository<People>(dbContext)
+public class PeopleRepository(DbContext dbContext) : Repository<People>(dbContext), IPeopleRepository
 {
     public async Task<People?> FindAsync(Guid id, CancellationToken cancellationToken = default) =>
         await base.FindAsync(id, cancellationToken: cancellationToken);
 
-    public async Task<List<People>> FindAllAsync(CancellationToken cancellationToken = default) =>
-        await base.FindAllAsync(cancellationToken: cancellationToken);
+    public async Task<List<People>> FindAllAsync(
+        int? pageNumber = default,
+        int? pageSize = default,
+        CancellationToken cancellationToken = default) =>
+        await base.FindAllAsync(pageNumber, pageSize, cancellationToken: cancellationToken);
 
     public async Task AddAsync(People people, CancellationToken cancellationToken = default)
     {
@@ -27,9 +30,7 @@ public class PeopleRepository(DbContext dbContext) : Repository<People>(dbContex
 
     public async Task DeleteAsync(People people, CancellationToken cancellationToken = default)
     {
-        Guard.Against.Null(people.Id);
-
-        base.Remove(people.Id.Value);
+        base.Remove(people.Id);
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 }
