@@ -1,6 +1,8 @@
-﻿namespace SwApi.Domain.Entities;
+﻿using SwApi.Domain.Common;
 
-public class Specie
+namespace SwApi.Domain.Entities;
+
+public class Specie : BaseEntity
 {
     public required string Name { get; set; }
 
@@ -25,8 +27,4 @@ public class Specie
     public List<People> People { get; set; } = [];
 
     public List<Film> Films { get; set; } = [];
-
-    public required string Created { get; set; }
-
-    public required string Edited { get; set; }
 }

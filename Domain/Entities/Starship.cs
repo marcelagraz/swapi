@@ -1,6 +1,8 @@
-﻿namespace SwApi.Domain.Entities;
+﻿using SwApi.Domain.Common;
 
-public class Starship
+namespace SwApi.Domain.Entities;
+
+public class Starship : BaseEntity
 {
     public required string Name { get; set; }
 
@@ -31,8 +33,4 @@ public class Starship
     public List<Film> Films { get; set; } = [];
 
     public List<People> Pilots { get; set; } = [];
-
-    public required string Created { get; set; }
-
-    public required string Edited { get; set; }
 }

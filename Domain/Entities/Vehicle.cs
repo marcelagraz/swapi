@@ -1,6 +1,8 @@
-﻿namespace SwApi.Domain.Entities;
+﻿using SwApi.Domain.Common;
 
-public class Vehicle
+namespace SwApi.Domain.Entities;
+
+public class Vehicle : BaseEntity
 {
     public required string Name { get; set; }
 
@@ -27,8 +29,4 @@ public class Vehicle
     public List<Film> Films { get; set; } = [];
 
     public List<People> Pilots { get; set; } = [];
-
-    public required string Created { get; set; }
-
-    public required string Edited { get; set; }
 }

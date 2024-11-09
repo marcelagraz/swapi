@@ -1,6 +1,8 @@
-﻿namespace SwApi.Domain.Entities;
+﻿using SwApi.Domain.Common;
 
-public class Film
+namespace SwApi.Domain.Entities;
+
+public class Film : BaseEntity
 {
     public required string Title { get; set; }
 
@@ -23,8 +25,4 @@ public class Film
     public List<People> Characters { get; set; } = [];
 
     public List<Planet> Planets { get; set; } = [];
-
-    public required string Created { get; set; }
-
-    public required string Edited { get; set; }
 }

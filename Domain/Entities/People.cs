@@ -1,6 +1,8 @@
-﻿namespace SwApi.Domain.Entities;
+﻿using SwApi.Domain.Common;
 
-public class People
+namespace SwApi.Domain.Entities;
+
+public class People : BaseEntity
 {
     public required string Name { get; set; }
 
@@ -27,8 +29,4 @@ public class People
     public List<Starship> Starships { get; set; } = [];
 
     public List<Vehicle> Vehicles { get; set; } = [];
-
-    public required string Created { get; set; }
-
-    public required string Edited { get; set; }
 }
