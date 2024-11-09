@@ -2,11 +2,11 @@
 using SwApi.Domain.Common;
 using System.Linq.Expressions;
 
-namespace SwApi.Infrastructure.Persistence.Repositories;
+namespace SwApi.Infrastructure.Persistence.Common;
 
-public class Repository<TEntity>(DbContext dbContext) where TEntity: BaseEntity, new()
+public class Repository<TEntity>(DbContext dbContext) where TEntity : BaseEntity, new()
 {
-    private readonly DbContext _dbContext = dbContext;
+    public DbContext DbContext { get; } = dbContext;
 
     public Task<TEntity?> FindAsync(
         Guid id,
@@ -15,7 +15,7 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity: BaseEntity,
         CancellationToken cancellationToken = default)
     {
         includes ??= [];
-        IQueryable<TEntity> queryable = _dbContext.Set<TEntity>();
+        IQueryable<TEntity> queryable = DbContext.Set<TEntity>();
 
         if (includes.Any())
         {
@@ -28,10 +28,10 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity: BaseEntity,
         if (noTracking)
             queryable = queryable.AsNoTracking();
 
-        return queryable.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+        return queryable.FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken);
     }
 
-    public async Task<IList<TEntity>> FindAllAsync(
+    public async Task<List<TEntity>> FindAllAsync(
         bool noTracking = default,
         Expression<Func<TEntity, bool>>? where = default,
         Expression<Func<TEntity, object?>>? orderBy = default,
@@ -39,7 +39,7 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity: BaseEntity,
         CancellationToken cancellationToken = default)
     {
         includes ??= [];
-        IQueryable<TEntity>? queryable = _dbContext.Set<TEntity>();
+        IQueryable<TEntity>? queryable = DbContext.Set<TEntity>();
 
         if (includes.Any())
         {
@@ -61,14 +61,14 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity: BaseEntity,
 
     public virtual TEntity Add(TEntity entity)
     {
-        return _dbContext
+        return DbContext
             .Add(entity)
             .Entity;
     }
 
     public virtual TEntity Update(TEntity entity)
     {
-        return _dbContext
+        return DbContext
             .Set<TEntity>()
             .Update(entity)
             .Entity;
@@ -76,7 +76,7 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity: BaseEntity,
 
     public void Remove(Guid id)
     {
-        _dbContext
+        DbContext
             .Set<TEntity>()
             .Remove(new TEntity { Id = id });
     }

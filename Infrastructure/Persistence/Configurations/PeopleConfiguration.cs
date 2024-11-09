@@ -4,31 +4,31 @@ using SwApi.Infrastructure.Persistence.Common;
 
 namespace SwApi.Infrastructure.Persistence.Configurations;
 
-public class PeopleConfiguration : BaseConfiguration<People>
+public class PeopleConfiguration : Configuration<People>
 {
     public override void Configure(EntityTypeBuilder<People> builder)
     {
         base.Configure(builder);
 
         builder
-            .Property(p => p.Name)
+            .Property(people => people.Name)
             .IsRequired();
 
         builder
-            .Property(p => p.BirthYear)
+            .Property(people => people.BirthYear)
             .IsRequired();
 
         builder
-            .Property(p => p.Gender)
+            .Property(people => people.Gender)
             .IsRequired();
 
         builder
-            .HasMany(p => p.Films)
-            .WithMany(f => f.Characters);
+            .HasMany(character => character.Films)
+            .WithMany(film => film.Characters);
 
         builder
-            .HasOne(p => p.Planet)
-            .WithMany(p => p.Residents)
-            .HasForeignKey(p => p.PlanetId);
+            .HasOne(resident => resident.Planet)
+            .WithMany(planet => planet.Residents)
+            .HasForeignKey(planet => planet.PlanetId);
     }
 }

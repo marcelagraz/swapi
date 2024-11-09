@@ -4,26 +4,26 @@ using SwApi.Infrastructure.Persistence.Common;
 
 namespace SwApi.Infrastructure.Persistence.Configurations;
 
-public class PlanetConfiguration : BaseConfiguration<Planet>
+public class PlanetConfiguration : Configuration<Planet>
 {
     public override void Configure(EntityTypeBuilder<Planet> builder)
     {
         base.Configure(builder);
 
         builder
-            .Property(p => p.Name)
+            .Property(planet => planet.Name)
             .IsRequired();
 
         builder
-            .Property(p => p.Gravity)
+            .Property(planet => planet.Gravity)
             .IsRequired();
 
         builder
-            .Property(p => p.Climate)
+            .Property(planet => planet.Climate)
             .IsRequired();
 
         builder
-            .HasMany(p => p.Films)
-            .WithMany(f => f.Planets);
+            .HasMany(planet => planet.Films)
+            .WithMany(film => film.Planets);
     }
 }

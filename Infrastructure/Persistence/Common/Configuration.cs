@@ -4,15 +4,15 @@ using SwApi.Domain.Common;
 
 namespace SwApi.Infrastructure.Persistence.Common;
 
-public abstract class BaseConfiguration<TEntity> : IEntityTypeConfiguration<TEntity> where TEntity : BaseEntity
+public abstract class Configuration<TEntity> : IEntityTypeConfiguration<TEntity> where TEntity : BaseEntity
 {
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {
         builder
-            .HasKey(x => x.Id);
+            .HasKey(entity => entity.Id);
 
         builder
-            .Property(p => p.ConcurrencyStamp)
+            .Property(entity => entity.ConcurrencyStamp)
             .IsConcurrencyToken();
     }
 }

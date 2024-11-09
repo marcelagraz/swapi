@@ -4,34 +4,34 @@ using SwApi.Infrastructure.Persistence.Common;
 
 namespace SwApi.Infrastructure.Persistence.Configurations;
 
-public class FilmConfiguration : BaseConfiguration<Film>
+public class FilmConfiguration : Configuration<Film>
 {
     public override void Configure(EntityTypeBuilder<Film> builder)
     {
         base.Configure(builder);
 
         builder
-            .Property(f => f.Title)
+            .Property(film => film.Title)
             .IsRequired();
 
         builder
-            .Property(f => f.EpisodeId)
+            .Property(film => film.EpisodeId)
             .IsRequired();
 
         builder
-            .Property(f => f.Director)
+            .Property(film => film.Director)
             .IsRequired();
 
         builder
-            .Property(f => f.ReleaseDate)
+            .Property(film => film.ReleaseDate)
             .IsRequired();
 
         builder
-            .HasMany(f => f.Characters)
-            .WithMany(c => c.Films);
+            .HasMany(film => film.Characters)
+            .WithMany(character => character.Films);
 
         builder
-            .HasMany(f => f.Planets)
-            .WithMany(p => p.Films);
+            .HasMany(film => film.Planets)
+            .WithMany(planet => planet.Films);
     }
 }
