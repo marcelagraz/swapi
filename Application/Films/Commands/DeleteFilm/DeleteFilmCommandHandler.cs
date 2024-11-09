@@ -1,23 +1,20 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
 using MediatR;
 using SwApi.Application.Common.Repositories;
-using SwApi.Domain.Entities;
+using SwApi.Application.Common.Requests;
 
 namespace SwApi.Application.Films.Commands.DeleteFilm;
 
 public class DeleteFilmCommandHandler(
-    IMapper mapper,
     IFilmRepository filmRepository) :
-    IRequestHandler<DeleteFilmCommand, Guid>
+    IRequestHandler<DeleteCommand>
 {
     private readonly IFilmRepository filmRepository = filmRepository;
 
-    public async Task<Guid> Handle(DeleteFilmCommand command, CancellationToken cancellationToken)
+    public async Task Handle(DeleteCommand command, CancellationToken cancellationToken)
     {
-        var people = mapper.Map<Film>(command);
+        Guard.Against.Null(command.Id);
 
-        await filmRepository.DeleteAsync(people, cancellationToken);
-
-        return people.Id;
+        await filmRepository.DeleteAsync(command.Id.Value, cancellationToken);
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SwApi.Application.Common.Repositories;
 using SwApi.Domain.Entities;
 using SwApi.Infrastructure.Persistence.Common;
 
 namespace SwApi.Infrastructure.Persistence.Repositories;
 
-public class PlanetRepository(DbContext dbContext) : Repository<Planet>(dbContext)
+public class PlanetRepository(SwApiDbContext dbContext) : Repository<Planet>(dbContext), IPlanetRepository
 {
     public async Task<Planet?> FindAsync(Guid id, CancellationToken cancellationToken = default) =>
         await base.FindAsync(id, cancellationToken: cancellationToken);
@@ -27,9 +28,12 @@ public class PlanetRepository(DbContext dbContext) : Repository<Planet>(dbContex
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(Planet planet, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        base.Remove(planet.Id);
+        base.Remove(id);
         await DbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public new async Task<bool> AnyAsync(Guid id, CancellationToken cancellationToken = default) =>
+        await base.AnyAsync(id, cancellationToken);
 }

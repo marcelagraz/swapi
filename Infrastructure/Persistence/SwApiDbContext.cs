@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace SwApi.Infrastructure.Persistence;
 
-public class SwApiDbContext : DbContext
+public class SwApiDbContext(DbContextOptions<SwApiDbContext> options) : DbContext(options)
 {
     public DbSet<People> Peoples => Set<People>();
 

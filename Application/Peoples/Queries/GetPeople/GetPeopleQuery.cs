@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SwApi.Domain.Entities;
 
-namespace SwApi.Application.Peoples.Commands.GetPeople;
+namespace SwApi.Application.Peoples.Queries.GetPeople;
 
 public record GetPeopleQuery : IRequest<People?>
 {

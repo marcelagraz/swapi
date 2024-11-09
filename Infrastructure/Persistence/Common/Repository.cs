@@ -6,7 +6,7 @@ namespace SwApi.Infrastructure.Persistence.Common;
 
 public class Repository<TEntity>(DbContext dbContext) where TEntity : BaseEntity, new()
 {
-    public DbContext DbContext { get; } = dbContext;
+    protected DbContext DbContext { get; } = dbContext;
 
     public Task<TEntity?> FindAsync(
         Guid id,
@@ -31,7 +31,7 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity : BaseEntity
         return queryable.FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken);
     }
 
-    public async Task<List<TEntity>> FindAllAsync(
+    public Task<List<TEntity>> FindAllAsync(
         int? pageNumber = default,
         int? pageSize = default,
         bool noTracking = default,
@@ -65,7 +65,7 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity : BaseEntity
                 .Take(pageSize.Value);
         }
 
-        return await queryable.ToListAsync(cancellationToken);
+        return queryable.ToListAsync(cancellationToken);
     }
 
     public virtual TEntity Add(TEntity entity)
@@ -88,5 +88,12 @@ public class Repository<TEntity>(DbContext dbContext) where TEntity : BaseEntity
         DbContext
             .Set<TEntity>()
             .Remove(new TEntity { Id = id });
+    }
+
+    public Task<bool> AnyAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return DbContext
+            .Set<TEntity>()
+            .AnyAsync(entity => entity.Id == id, cancellationToken);
     }
 }

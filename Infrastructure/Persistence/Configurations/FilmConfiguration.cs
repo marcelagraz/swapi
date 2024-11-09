@@ -15,7 +15,7 @@ public class FilmConfiguration : Configuration<Film>
             .IsRequired();
 
         builder
-            .Property(film => film.EpisodeId)
+            .Property(film => film.Episode)
             .IsRequired();
 
         builder

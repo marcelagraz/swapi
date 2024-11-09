@@ -2,7 +2,7 @@
 using SwApi.Application.Common.Repositories;
 using SwApi.Domain.Entities;
 
-namespace SwApi.Application.Planets.Commands.GetAllPlanet;
+namespace SwApi.Application.Planets.Queries.GetAllPlanet;
 
 public class GetAllPlanetQueryHandler(
     IPlanetRepository planetRepository) :

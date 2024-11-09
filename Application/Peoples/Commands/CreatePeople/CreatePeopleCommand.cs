@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using SwApi.Domain.Entities;
 
 namespace SwApi.Application.Peoples.Commands.CreatePeople;
 
-public record CreatePeopleCommand : IRequest<Guid>
+public record CreatePeopleCommand : IRequest<People>
 {
     public string? Name { get; set; }
 

@@ -1,11 +1,8 @@
-﻿using MediatR;
+﻿using SwApi.Application.Common.Requests;
 using SwApi.Domain.Entities;
 
-namespace SwApi.Application.Peoples.Commands.GetAllPeople;
+namespace SwApi.Application.Peoples.Queries.GetAllPeople;
 
-public record GetAllPeopleQuery : IRequest<List<People>>
+public record GetAllPeopleQuery : GetAllQuery<People>
 {
-    public int? PageNumber { get; set; }
-
-    public int? PageSize { get; set; }
 }

@@ -1,18 +1,17 @@
 ﻿using MediatR;
+using SwApi.Domain.Entities;
 
 namespace SwApi.Application.Planets.Commands.CreatePlanet;
 
-public record CreatePlanetCommand : IRequest<Guid>
+public record CreatePlanetCommand : IRequest<Planet>
 {
-    public string? Title { get; set; }
+    public string? Name { get; set; }
 
-    public int? EpisodeId { get; set; }
+    public float? Gravity { get; set; }
 
-    public string? Director { get; set; }
+    public string? Climate { get; set; }
 
-    public DateOnly? ReleaseDate { get; set; }
+    public List<int> Residents { get; set; } = [];
 
-    public List<int> Characters { get; set; } = [];
-
-    public List<int> Planets { get; set; } = [];
+    public List<int> Films { get; set; } = [];
 }

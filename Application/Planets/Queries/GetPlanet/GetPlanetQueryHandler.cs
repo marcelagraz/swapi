@@ -3,7 +3,7 @@ using MediatR;
 using SwApi.Application.Common.Repositories;
 using SwApi.Domain.Entities;
 
-namespace SwApi.Application.Planets.Commands.GetPlanet;
+namespace SwApi.Application.Planets.Queries.GetPlanet;
 
 public class GetPlanetQueryHandler(
     IPlanetRepository planetRepository) :

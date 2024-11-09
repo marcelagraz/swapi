@@ -6,7 +6,7 @@ public class Film : BaseEntity
 {
     public string? Title { get; set; }
 
-    public int? EpisodeId { get; set; }
+    public int? Episode { get; set; }
 
     public string? Director { get; set; }
 

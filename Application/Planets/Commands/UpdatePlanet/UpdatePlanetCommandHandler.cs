@@ -8,16 +8,16 @@ namespace SwApi.Application.Planets.Commands.UpdatePlanet;
 public class UpdatePlanetCommandHandler(
     IMapper mapper,
     IPlanetRepository planetRepository) :
-    IRequestHandler<UpdatePlanetCommand, Guid>
+    IRequestHandler<UpdatePlanetCommand, Planet>
 {
     private readonly IPlanetRepository planetRepository = planetRepository;
 
-    public async Task<Guid> Handle(UpdatePlanetCommand command, CancellationToken cancellationToken)
+    public async Task<Planet> Handle(UpdatePlanetCommand command, CancellationToken cancellationToken)
     {
         var planet = mapper.Map<Planet>(command);
 
         await planetRepository.UpdateAsync(planet, cancellationToken);
 
-        return planet.Id;
+        return planet;
     }
 }

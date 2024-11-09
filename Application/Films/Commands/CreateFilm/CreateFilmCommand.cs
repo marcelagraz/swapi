@@ -1,12 +1,13 @@
 ﻿using MediatR;
+using SwApi.Domain.Entities;
 
 namespace SwApi.Application.Films.Commands.CreateFilm;
 
-public record CreateFilmCommand : IRequest<Guid>
+public record CreateFilmCommand : IRequest<Film>
 {
     public string? Title { get; set; }
 
-    public int? EpisodeId { get; set; }
+    public int? Episode { get; set; }
 
     public string? Director { get; set; }
 

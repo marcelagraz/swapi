@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SwApi.Domain.Entities;
 
-namespace SwApi.Application.Films.Commands.GetFilm;
+namespace SwApi.Application.Films.Queries.GetFilm;
 
 public record GetFilmQuery : IRequest<Film?>
 {

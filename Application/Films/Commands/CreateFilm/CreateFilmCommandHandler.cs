@@ -8,16 +8,16 @@ namespace SwApi.Application.Films.Commands.CreateFilm;
 public class CreateFilmCommandHandler(
     IMapper mapper,
     IFilmRepository filmRepository) :
-    IRequestHandler<CreateFilmCommand, Guid>
+    IRequestHandler<CreateFilmCommand, Film>
 {
     private readonly IFilmRepository filmRepository = filmRepository;
 
-    public async Task<Guid> Handle(CreateFilmCommand command, CancellationToken cancellationToken)
+    public async Task<Film> Handle(CreateFilmCommand command, CancellationToken cancellationToken)
     {
-        var people = mapper.Map<Film>(command);
+        var film = mapper.Map<Film>(command);
 
-        await filmRepository.AddAsync(people, cancellationToken);
+        await filmRepository.AddAsync(film, cancellationToken);
 
-        return people.Id;
+        return film;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SwApi.Application.Common.Repositories;
+using SwApi.Application.Peoples.Queries.GetAllPeople;
 using SwApi.Domain.Entities;
 
 namespace SwApi.Application.Peoples.Commands.GetAllPeople;

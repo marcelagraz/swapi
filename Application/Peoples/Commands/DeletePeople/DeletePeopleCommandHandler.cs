@@ -1,23 +1,19 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
 using MediatR;
 using SwApi.Application.Common.Repositories;
-using SwApi.Domain.Entities;
 
 namespace SwApi.Application.Peoples.Commands.DeletePeople;
 
 public class DeletePeopleCommandHandler(
-    IMapper mapper,
     IPeopleRepository peopleRepository) :
-    IRequestHandler<DeletePeopleCommand, Guid>
+    IRequestHandler<DeletePeopleCommand>
 {
     private readonly IPeopleRepository peopleRepository = peopleRepository;
 
-    public async Task<Guid> Handle(DeletePeopleCommand command, CancellationToken cancellationToken)
+    public async Task Handle(DeletePeopleCommand command, CancellationToken cancellationToken)
     {
-        var people = mapper.Map<People>(command);
+        Guard.Against.Null(command.Id);
 
-        await peopleRepository.DeleteAsync(people, cancellationToken);
-
-        return people.Id;
+        await peopleRepository.DeleteAsync(command.Id.Value, cancellationToken);
     }
 }

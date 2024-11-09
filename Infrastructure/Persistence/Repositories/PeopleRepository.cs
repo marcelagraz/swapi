@@ -5,7 +5,7 @@ using SwApi.Infrastructure.Persistence.Common;
 
 namespace SwApi.Infrastructure.Persistence.Repositories;
 
-public class PeopleRepository(DbContext dbContext) : Repository<People>(dbContext), IPeopleRepository
+public class PeopleRepository(SwApiDbContext dbContext) : Repository<People>(dbContext), IPeopleRepository
 {
     public async Task<People?> FindAsync(Guid id, CancellationToken cancellationToken = default) =>
         await base.FindAsync(id, cancellationToken: cancellationToken);
@@ -28,9 +28,12 @@ public class PeopleRepository(DbContext dbContext) : Repository<People>(dbContex
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteAsync(People people, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        base.Remove(people.Id);
+        base.Remove(id);
         await DbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public new async Task<bool> AnyAsync(Guid id, CancellationToken cancellationToken = default) =>
+        await base.AnyAsync(id, cancellationToken);
 }
