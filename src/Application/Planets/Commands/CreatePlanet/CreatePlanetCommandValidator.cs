@@ -20,11 +20,5 @@ public class CreatePlanetCommandValidator : AbstractValidator<CreatePlanetComman
             .Cascade(CascadeMode.Stop)
             .NotNull()
             .NotEmpty();
-
-        RuleFor(v => v.Residents)
-            .NotEmpty();
-
-        RuleFor(v => v.Films)
-            .NotEmpty();
     }
 }

@@ -14,7 +14,7 @@ public class CreateFilmCommandValidator : AbstractValidator<CreateFilmCommand>
         RuleFor(v => v.Episode)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .NotEmpty();
+            .GreaterThan(0);
 
         RuleFor(v => v.Director)
             .Cascade(CascadeMode.Stop)
@@ -24,12 +24,6 @@ public class CreateFilmCommandValidator : AbstractValidator<CreateFilmCommand>
         RuleFor(v => v.ReleaseDate)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .NotEmpty();
-
-        RuleFor(v => v.Characters)
-            .NotEmpty();
-
-        RuleFor(v => v.Characters)
             .NotEmpty();
     }
 }

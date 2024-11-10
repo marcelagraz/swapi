@@ -10,12 +10,12 @@ public abstract class GetAllQueryValidator<TRequest, TEntity> : AbstractValidato
 {
     public GetAllQueryValidator()
     {
-        RuleFor(v => v.PageNumber)
+        RuleFor(q => q.PageNumber)
             .Cascade(CascadeMode.Stop)
             .NotNull()
             .GreaterThan(0);
 
-        RuleFor(v => v.PageSize)
+        RuleFor(q => q.PageSize)
             .Cascade(CascadeMode.Stop)
             .NotNull()
             .GreaterThan(0);

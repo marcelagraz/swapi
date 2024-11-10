@@ -4,6 +4,7 @@ using SwApi.Domain.Entities;
 
 namespace SwApi.Application.Planets.Commands.DeletePlanet;
 
-public class DeletePlanetCommandValidator(IPlanetRepository planetRepository) : DeleteCommandValidator<Planet, IPlanetRepository>(planetRepository)
+public class DeletePlanetCommandValidator(IPlanetRepository planetRepository) :
+    DeleteCommandValidator<Planet, IPlanetRepository, DeletePlanetCommand>(planetRepository)
 {
 }

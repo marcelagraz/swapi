@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using SwApi.Api.ExceptionHandling;
 
 namespace SwApi.Api;
 
@@ -17,6 +19,8 @@ public static class DependencyInjection
         {
             configure.Title = "The Star Wars API";
         });
+
+        services.AddExceptionHandler<GlobalExceptionHandler>();
 
         return services;
     }

@@ -4,6 +4,7 @@ using SwApi.Domain.Entities;
 
 namespace SwApi.Application.Peoples.Commands.DeletePeople;
 
-public class DeleteFilmCommandValidator(IPeopleRepository peopleRepository) : DeleteCommandValidator<People, IPeopleRepository>(peopleRepository)
+public class DeleteFilmCommandValidator(IPeopleRepository peopleRepository) :
+    DeleteCommandValidator<People, IPeopleRepository, DeletePeopleCommand>(peopleRepository)
 {
 }

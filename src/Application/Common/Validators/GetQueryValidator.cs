@@ -16,7 +16,7 @@ public abstract class GetQueryValidator<TEntity, TRepository> : AbstractValidato
     {
         _repository = repository;
 
-        RuleFor(v => v.Id)
+        RuleFor(q => q.Id)
             .Cascade(CascadeMode.Stop)
             .NotNull()
             .MustAsync(ExistInDatabase)

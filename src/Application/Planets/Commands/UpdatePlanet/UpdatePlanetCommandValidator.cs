@@ -15,7 +15,6 @@ public class UpdatePlanetCommandValidator : AbstractValidator<UpdatePlanetComman
         RuleFor(v => v.Id)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .NotEmpty()
             .MustAsync(ExistInDatabase)
             .WithMessage("'Planet' must exist in database.");
 
@@ -34,10 +33,9 @@ public class UpdatePlanetCommandValidator : AbstractValidator<UpdatePlanetComman
             .NotNull()
             .NotEmpty();
 
-        RuleFor(v => v.Residents)
-            .NotEmpty();
-
-        RuleFor(v => v.Films)
+        RuleFor(v => v.ConcurrencyStamp)
+            .Cascade(CascadeMode.Stop)
+            .NotNull()
             .NotEmpty();
     }
 

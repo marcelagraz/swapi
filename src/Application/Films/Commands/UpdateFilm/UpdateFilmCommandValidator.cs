@@ -15,7 +15,6 @@ public class UpdateFilmCommandValidator : AbstractValidator<UpdateFilmCommand>
         RuleFor(v => v.Id)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .NotEmpty()
             .MustAsync(ExistInDatabase)
             .WithMessage("Film must exist in database.");
 
@@ -39,10 +38,9 @@ public class UpdateFilmCommandValidator : AbstractValidator<UpdateFilmCommand>
             .NotNull()
             .NotEmpty();
 
-        RuleFor(v => v.Characters)
-            .NotEmpty();
-
-        RuleFor(v => v.Characters)
+        RuleFor(v => v.ConcurrencyStamp)
+            .Cascade(CascadeMode.Stop)
+            .NotNull()
             .NotEmpty();
     }
 

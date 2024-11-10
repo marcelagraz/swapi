@@ -19,7 +19,6 @@ public class UpdatePeopleCommandValidator : AbstractValidator<UpdatePeopleComman
         RuleFor(v => v.Id)
             .Cascade(CascadeMode.Stop)
             .NotNull()
-            .NotEmpty()
             .MustAsync(ExistInDatabase)
             .WithMessage("'People' must exist in database.");
 
@@ -44,6 +43,11 @@ public class UpdatePeopleCommandValidator : AbstractValidator<UpdatePeopleComman
             .NotEmpty()
             .MustAsync(PlanetExistInDatabase)
             .WithMessage($"'{nameof(Planet)}' with {{PropertyName}} {{PropertyValue}} must exist in database.");
+
+        RuleFor(v => v.ConcurrencyStamp)
+            .Cascade(CascadeMode.Stop)
+            .NotNull()
+            .NotEmpty();
     }
 
     private Task<bool> ExistInDatabase(Guid? id, CancellationToken cancellationToken)

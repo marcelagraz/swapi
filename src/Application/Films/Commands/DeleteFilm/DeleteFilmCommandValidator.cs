@@ -4,6 +4,7 @@ using SwApi.Domain.Entities;
 
 namespace SwApi.Application.Films.Commands.DeleteFilm;
 
-public class DeleteFilmCommandValidator(IFilmRepository filmRepository) : DeleteCommandValidator<Film, IFilmRepository>(filmRepository)
+public class DeleteFilmCommandValidator(IFilmRepository filmRepository) :
+    DeleteCommandValidator<Film, IFilmRepository, DeleteFilmCommand>(filmRepository)
 {
 }

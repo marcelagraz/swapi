@@ -6,9 +6,10 @@ using SwApi.Domain.Common;
 
 namespace SwApi.Application.Common.Validators;
 
-public abstract class DeleteCommandValidator<TEntity, TRepository> : AbstractValidator<DeleteCommand>
+public abstract class DeleteCommandValidator<TEntity, TRepository, TRequest> : AbstractValidator<TRequest>
     where TEntity : BaseEntity
     where TRepository : IRepository<TEntity>
+    where TRequest : DeleteCommand
 {
     private readonly TRepository _repository;
 
@@ -16,11 +17,16 @@ public abstract class DeleteCommandValidator<TEntity, TRepository> : AbstractVal
     {
         _repository = repository;
 
-        RuleFor(v => v.Id)
+        RuleFor(c => c.Id)
             .Cascade(CascadeMode.Stop)
             .NotNull()
             .MustAsync(ExistInDatabase)
             .WithMessage($"'{typeof(TEntity).Name}' with {{PropertyName}} {{PropertyValue}} must exist in database.");
+
+        RuleFor(c => c.ConcurrencyStamp)
+            .Cascade(CascadeMode.Stop)
+            .NotNull()
+            .NotEmpty();
     }
 
     private Task<bool> ExistInDatabase(Guid? id, CancellationToken cancellationToken)
