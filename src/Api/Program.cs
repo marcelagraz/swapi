@@ -13,6 +13,8 @@ var app = builder.Build();
 
 app.UseExceptionHandler(options => { });
 
+app.UseCors("SwUICorsPolicy");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

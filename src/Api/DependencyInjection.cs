@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SwApi.Api.ExceptionHandling;
 
 namespace SwApi.Api;
@@ -22,6 +21,23 @@ public static class DependencyInjection
 
         services.AddExceptionHandler<GlobalExceptionHandler>();
 
+        AddCorsPolicies(services);
+
         return services;
+    }
+
+    public static void AddCorsPolicies(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("SwUICorsPolicy", corsPolicyBuilder =>
+            {
+                corsPolicyBuilder
+                    .WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            });
+        });
     }
 }
